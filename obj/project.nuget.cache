@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "tBX87vGxpPA=",
+  "dgSpecHash": "Qa5pwaaNo3o=",
   "success": true,
   "projectFilePath": "/home/abk/Documents/MyApi/MyApi.csproj",
   "expectedPackageFiles": [
+    "/home/abk/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
     "/home/abk/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/7.0.0/microsoft.aspnetcore.authentication.jwtbearer.7.0.0.nupkg.sha512",
     "/home/abk/.nuget/packages/microsoft.aspnetcore.openapi/8.0.12/microsoft.aspnetcore.openapi.8.0.12.nupkg.sha512",
     "/home/abk/.nuget/packages/microsoft.bcl.memory/9.0.0/microsoft.bcl.memory.9.0.0.nupkg.sha512",

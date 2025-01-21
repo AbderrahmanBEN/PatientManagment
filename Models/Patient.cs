@@ -1,11 +1,18 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MyApi.Models
 {
     public class Patient
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int Age { get; set; }
-        public string Diagnosis { get; set; }
+        public required int Id { get; set; }
+        public required string firstName { get; set; }
+        public required string lastName { get; set; }
+        public string email { get; set; }
+        public string phoneNumber { get; set; }
+        
+    	[DataType(DataType.Date)]
+    	[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+    	public DateTime dob { get; set; }
     }
 }
 

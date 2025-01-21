@@ -17,18 +17,26 @@ namespace MyApi.Controllers
             _configuration = configuration;
         }
 
+        private readonly List<(string Username, string Password, string Role)> _users = new()
+        {
+            ("admin", "123", "Admin"),
+            ("user", "456", "User")
+        };
+
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest request)
         {
-            // Dummy validation (replace with your user authentication logic)
-            if (request.Username != "admin" || request.Password != "password")
+            var user = _users.FirstOrDefault(u => u.Username == request.Username && u.Password == request.Password);
+            if (user == default)
                 return Unauthorized("Invalid username or password.");
-
-            var token = GenerateJwtToken(request.Username);
+						if (string.IsNullOrEmpty(user.Role))
+								return Unauthorized("Role not assigned.");
+								
+            var token = GenerateJwtToken(user.Username, user.Role);
             return Ok(new { Token = token });
         }
 
-        private string GenerateJwtToken(string username)
+        private string GenerateJwtToken(string username, string role)
         {
             var jwtSettings = _configuration.GetSection("Jwt");
             var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]);
@@ -36,15 +44,15 @@ namespace MyApi.Controllers
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, username),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                new Claim(ClaimTypes.Role, role),
+                new Claim(JwtRegisteredClaimNames.Iss, jwtSettings["Issuer"]), // Add the Issuer claim
+                new Claim(JwtRegisteredClaimNames.Aud, jwtSettings["Audience"]) // Add the Audience claim
             };
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddMinutes(double.Parse(jwtSettings["ExpireMinutes"])),
-                Issuer = jwtSettings["Issuer"],
-                Audience = jwtSettings["Audience"],
+                Expires = DateTime.UtcNow.AddMinutes(30),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(key),
                     SecurityAlgorithms.HmacSha256Signature)
@@ -56,11 +64,13 @@ namespace MyApi.Controllers
             return tokenHandler.WriteToken(token);
         }
     }
+    
+    
 
     public class LoginRequest
     {
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public required string Username { get; set; }
+        public required string Password { get; set; }
     }
 }
 

@@ -41,3 +41,4 @@
 /home/abk/Documents/MyApi/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 /home/abk/Documents/MyApi/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll
 /home/abk/Documents/MyApi/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll
+/home/abk/Documents/MyApi/bin/Debug/net8.0/BCrypt.Net-Next.dll

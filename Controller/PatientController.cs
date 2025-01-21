@@ -6,21 +6,22 @@ namespace MyApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
     public class PatientController : ControllerBase
     {
         private static List<Patient> Patients = new List<Patient>
         {
-            new Patient { Id = 1, Name = "John Doe", Age = 30, Diagnosis = "Flu" },
-            new Patient { Id = 2, Name = "Jane Smith", Age = 25, Diagnosis = "Cold" }
+            new Patient { Id = 1, firstName = "Mostafa", lastName = "KHAZNADAR" },
+            new Patient { Id = 2, firstName = "Khaireddine", lastName = "PACHA" }
         };
 
+    	[Authorize(Roles = "Admin,User")]
         [HttpGet]
         public IActionResult GetPatients()
         {
             return Ok(Patients);
         }
 
+    	[Authorize(Roles = "Admin,User")]
         [HttpGet("{id}")]
         public IActionResult GetPatient(int id)
         {
@@ -30,14 +31,29 @@ namespace MyApi.Controllers
             return Ok(patient);
         }
 
+    	[Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult CreatePatient(Patient patient)
-        {
-            patient.Id = Patients.Max(p => p.Id) + 1;
-            Patients.Add(patient);
-            return CreatedAtAction(nameof(GetPatient), new { id = patient.Id }, patient);
-        }
+	{
+	    // Check if a patient with the same ID already exists
+	    if (Patients.Any(p => p.Id == patient.Id))
+	    {
+		// Return a conflict response if the ID already exists
+		return Conflict(new { message = $"A patient with ID {patient.Id} already exists." });
+	    }
 
+	    // If no ID is provided, generate a new one
+	    if (patient.Id == 0)
+	    {
+		patient.Id = Patients.Any() ? Patients.Max(p => p.Id) + 1 : 1; 
+	    }
+
+	    Patients.Add(patient);
+	    return CreatedAtAction(nameof(GetPatient), new { id = patient.Id }, patient);
+	}
+
+
+    	[Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public IActionResult UpdatePatient(int id, Patient updatedPatient)
         {
@@ -45,12 +61,17 @@ namespace MyApi.Controllers
             if (patient == null)
                 return NotFound();
 
-            patient.Name = updatedPatient.Name;
-            patient.Age = updatedPatient.Age;
-            patient.Diagnosis = updatedPatient.Diagnosis;
+            patient.firstName = updatedPatient.firstName;
+            patient.lastName = updatedPatient.lastName;
+            patient.email = updatedPatient.email;
+            patient.phoneNumber = updatedPatient.phoneNumber;
+	    patient.dob = updatedPatient.dob;        
+    
+
             return NoContent();
         }
 
+    	[Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult DeletePatient(int id)
         {
