@@ -31,3 +31,13 @@
 /home/abk/Documents/MyApi/obj/Debug/net8.0/MyApi.pdb
 /home/abk/Documents/MyApi/obj/Debug/net8.0/MyApi.genruntimeconfig.cache
 /home/abk/Documents/MyApi/obj/Debug/net8.0/ref/MyApi.dll
+/home/abk/Documents/MyApi/obj/Debug/net8.0/MyApi.sourcelink.json
+/home/abk/Documents/MyApi/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/home/abk/Documents/MyApi/bin/Debug/net8.0/Microsoft.Bcl.Memory.dll
+/home/abk/Documents/MyApi/bin/Debug/net8.0/Microsoft.IdentityModel.Abstractions.dll
+/home/abk/Documents/MyApi/bin/Debug/net8.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/home/abk/Documents/MyApi/bin/Debug/net8.0/Microsoft.IdentityModel.Logging.dll
+/home/abk/Documents/MyApi/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.dll
+/home/abk/Documents/MyApi/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/home/abk/Documents/MyApi/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll
+/home/abk/Documents/MyApi/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll
